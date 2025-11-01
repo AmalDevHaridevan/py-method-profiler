@@ -230,4 +230,4 @@ For most use cases, this overhead is negligible (typically < 1 microsecond).
 
 ## License
 
-MIT License
+Apache License
