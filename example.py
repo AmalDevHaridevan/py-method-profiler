@@ -33,6 +33,10 @@ if __name__ == "__main__":
         result = calc.multiply(i, 2)
         print(f"multiply({i}, 2) = {result}")
     
+    for i in range(5):
+        result = calc.fibonacci(5 + i)
+        print(f"fibonacci({5 + i}, 2) = {result}")
+        
     # Get profiling data
     print("\n--- Profiling Results ---")
     add_times = ProfilingWrapper.get_profiling_data("Calculator.add")
@@ -42,6 +46,10 @@ if __name__ == "__main__":
     multiply_times = ProfilingWrapper.get_profiling_data("Calculator.multiply")
     print(f"\nCalculator.multiply called {len(multiply_times)} times")
     print(f"Execution times: {multiply_times}")
+    
+    fibonacci_times = ProfilingWrapper.get_profiling_data("Calculator.fibonacci")
+    print(f"\nCalculator.fibonacci called {len(fibonacci_times)} times")
+    print(f"Execution times: {fibonacci_times}")
     
     # Get statistics
     print("\n--- Statistics ---")
@@ -55,6 +63,11 @@ if __name__ == "__main__":
     for key, value in multiply_stats.items():
         print(f"  {key}: {value}")
     
+    fibonacci_stats = ProfilingWrapper.get_statistics("Calculator.fibonacci")
+    print(f"\nCalculator.fibonacci statistics:")
+    for key, value in fibonacci_stats.items():
+        print(f"  {key}: {value}")
+        
     # Show all profiling data
     print("\n--- All Profiling Data ---")
     all_data = ProfilingWrapper.get_all_profiling_data()

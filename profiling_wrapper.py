@@ -28,8 +28,8 @@ class ProfilingWrapper:
         Args:
             obj: Any object whose methods should be profiled
         """
-        self._wrapped_obj = obj
-        self._class_name = obj.__class__.__name__
+        self._profiling_wrapper_wrapped_obj = obj
+        self._profiling_wrapper_class_name = obj.__class__.__name__
     
     def __getattr__(self, name: str) -> Any:
         """
@@ -41,12 +41,12 @@ class ProfilingWrapper:
         Returns:
             The attribute value, wrapped if it's a callable method
         """
-        attr = getattr(self._wrapped_obj, name)
+        attr = getattr(self._profiling_wrapper_wrapped_obj, name)
         
         # If it's a method, wrap it with timing logic
         if callable(attr):
             def timed_method(*args, **kwargs):
-                key = f"{self._class_name}.{name}"
+                key = f"{self._profiling_wrapper_class_name}.{name}"
                 
                 start_time = time.perf_counter()
                 result = attr(*args, **kwargs)
@@ -71,10 +71,10 @@ class ProfilingWrapper:
             value: Value to set
         """
         # Internal attributes start with underscore
-        if name.startswith('_'):
+        if name.startswith('_profiling_wrapper_'):
             super().__setattr__(name, value)
         else:
-            setattr(self._wrapped_obj, name, value)
+            setattr(self._profiling_wrapper_wrapped_obj, name, value)
     
     @classmethod
     def get_profiling_data(cls, key: str) -> np.ndarray:
